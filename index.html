@@ -5,144 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday!</title>
 <style>
-  * {margin:0; padding:0; box-sizing:border-box;}
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #ffd6e8, #ffe6f2);
-    overflow-x: hidden;
-    text-align: center;
-  }
+* {margin:0; padding:0; box-sizing:border-box;}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ffd6e8, #ffe6f2);
+  overflow-x: hidden;
+  text-align: center;
+}
 
-  /* Greeting Screen */
-  #greetingScreen, #thankYou, #wishesForm {
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    color:#b01a52;
-    z-index:1000;
-    background: linear-gradient(135deg, #ffb6c1, #ffd1dc);
-    transition: opacity 1s ease;
-  }
-  #greetingScreen h1, #thankYou h2 {
-    font-size: 3rem;
-    animation: fadeIn 2s ease;
-  }
-  #greetingScreen p {
-    margin-top: 10px;
-    font-size: 1.2rem;
-  }
+/* Greeting Screen */
+#greetingScreen, #thankYou, #wishesForm {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  color:#b01a52;
+  z-index:1000;
+  background: linear-gradient(135deg, #ffb6c1, #ffd1dc);
+  transition: opacity 1s ease;
+}
+#greetingScreen h1, #thankYou h2 {
+  font-size: 3rem;
+  animation: fadeIn 2s ease;
+}
+#greetingScreen p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+}
 
-  /* Slideshow container */
-  .slideshow-container {
-    width: 100%;
-    height: 100vh;
-    position: relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow: hidden;
-    background: none; /* no white background */
-    opacity: 0;
-    transition: opacity 1s ease;
-    z-index: 500;
-  }
-  .slide {
-    position: absolute;
-    opacity: 0;
-    transition: opacity 1s ease;
-    width: 100%;
-    height: 100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .slide img {
-    display:block;
-    max-width: 100%;
-    max-height: 100%;
-    margin:auto;
-    filter: brightness(1.1) contrast(1.05) saturate(1.2);
-  }
-  .slide.active { opacity:1; transform:none; }
+/* Slideshow container */
+.slideshow-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow: hidden;
+  background: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 500;
+}
+.slide {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 1s ease;
+  width: 100%;
+  height: 100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.slide img {
+  display:block;
+  max-width: 100%;
+  max-height: 100%;
+  margin:auto;
+  filter: brightness(1.1) contrast(1.05) saturate(1.2);
+}
+.slide.active { opacity:1; transform:none; }
 
-  /* Wishes Form */
-  #wishesForm {
-    display: none; /* initially hidden */
-    background: rgba(255, 240, 245, 0.95);
-    width: 90%;
-    max-width: 500px;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    z-index:1001;
-  }
-  #wishesForm input, #wishesForm textarea {
-    width: 100%;
-    padding: 8px;
-    margin: 6px 0;
-    border-radius: 8px;
-    border: 1px solid #ffc0cb;
-  }
-  #wishesForm button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background: #ff5c8d;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1rem;
-  }
-  .wish-list {
-    margin-top: 12px;
-    max-height: 200px;
-    overflow-y: auto;
-    text-align: left;
-  }
-  .wish-item {
-    background: #ffe6ef;
-    padding: 8px;
-    margin-bottom: 6px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .wish-item button {
-    background: #ff5c8d;
-    border: none;
-    color: white;
-    border-radius: 6px;
-    padding: 2px 6px;
-    cursor: pointer;
-    font-size: 0.8rem;
-  }
+/* Wishes Form */
+#wishesForm {
+  display: none;
+  background: rgba(255, 240, 245, 0.95);
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  z-index:1001;
+}
+#wishesForm input, #wishesForm textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0;
+  border-radius: 8px;
+  border: 1px solid #ffc0cb;
+}
+#wishesForm button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #ff5c8d;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.wish-list {
+  margin-top: 12px;
+  max-height: 200px;
+  overflow-y: auto;
+  text-align: left;
+}
+.wish-item {
+  background: #ffe6ef;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wish-item button {
+  background: #ff5c8d;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
 
-  /* Floating Decorations */
-  .float-emoji {
-    position: fixed;
-    bottom: -60px;
-    font-size: 24px;
-    pointer-events: none;
-    opacity: 0.8;
-    animation: floatUp 8s linear forwards;
-    z-index: 500;
-  }
+/* Floating Decorations */
+.float-emoji {
+  position: fixed;
+  bottom: -60px;
+  font-size: 24px;
+  pointer-events: none;
+  opacity: 0.8;
+  animation: floatUp 8s linear forwards;
+  z-index: 500;
+}
 
-  @keyframes floatUp {
-    0% { transform: translateY(0); opacity:1; }
-    100% { transform: translateY(-120vh); opacity:0; }
-  }
-  @keyframes fadeIn {
-    from {opacity:0;}
-    to {opacity:1;}
-  }
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity:1; }
+  100% { transform: translateY(-120vh); opacity:0; }
+}
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
 </style>
 </head>
 <body>
@@ -251,7 +251,7 @@ function showThankYou(){
       wishesForm.style.top='50%';
       wishesForm.style.left='50%';
       wishesForm.style.transform='translate(-50%, -50%)';
-    }, 3000); // show thank you for 3 sec
+    }, 3000);
   }, 100);
 }
 
