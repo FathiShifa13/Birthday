@@ -40,7 +40,7 @@ body {
 .slideshow-container {
   width: 100%;
   height: 100vh;
-  position: relative;
+  position: fixed;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -67,7 +67,7 @@ body {
   margin:auto;
   filter: brightness(1.1) contrast(1.05) saturate(1.2);
 }
-.slide.active { opacity:1; transform:none; }
+.slide.active { opacity:1; }
 
 /* Wishes Form */
 #wishesForm {
@@ -195,19 +195,67 @@ body {
 <!-- Music -->
 <audio id="bgMusic" src="music.mp3" preload="metadata"></audio>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "SENDER_ID",
+  appId: "APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+</script>
+
 <script>
 const music = document.getElementById('bgMusic');
 const greetingScreen = document.getElementById('greetingScreen');
 const slideshow = document.getElementById('slideshow');
 const thankYou = document.getElementById('thankYou');
 const wishesForm = document.getElementById('wishesForm');
+const wishList = document.getElementById('wishList');
+
+// Load wishes from Firebase
+db.ref('wishes').on('value', snapshot => {
+  wishList.innerHTML = '';
+  const wishes = snapshot.val();
+  if (!wishes) return;
+  Object.entries(wishes).forEach(([key, w]) => {
+    const item = document.createElement('div');
+    item.className = 'wish-item';
+    item.innerHTML = `<strong>${w.name}:</strong> ${w.text} <button onclick="deleteWish('${key}')">Delete</button>`;
+    wishList.appendChild(item);
+  });
+});
+
+// Delete wish
+function deleteWish(key){
+  db.ref('wishes/' + key).remove();
+}
+
+// Submit wish
+document.getElementById('submitWish').addEventListener('click', () => {
+  const name = document.getElementById('wishName').value.trim();
+  const text = document.getElementById('wishText').value.trim();
+  if (!name || !text) return alert('Please fill both fields');
+
+  const wishRef = db.ref('wishes').push();
+  wishRef.set({name, text});
+  document.getElementById('wishName').value='';
+  document.getElementById('wishText').value='';
+});
 
 // Start sequence on click
 document.body.addEventListener('click', () => {
   greetingScreen.style.display = 'none';
   slideshow.style.opacity = '1';
   playMusic();
-  startSlideshow(21, 90, showThankYou);
+  startSlideshow(21, 90, showThankYou); // 21 photos, 90 seconds total
 }, { once: true });
 
 function playMusic(){
@@ -215,14 +263,11 @@ function playMusic(){
   music.play().catch(()=>console.log("Autoplay blocked"));
 }
 
-// Slideshow with callback after ending
 function startSlideshow(photoCount, totalSeconds, callback){
   const slides = document.querySelectorAll('.slide');
   let index = 0;
   slides[index].classList.add('active');
-
   const slideDuration = (totalSeconds*1000)/photoCount;
-
   const interval = setInterval(()=>{
     slides[index].classList.remove('active');
     index++;
@@ -236,54 +281,12 @@ function startSlideshow(photoCount, totalSeconds, callback){
   }, slideDuration);
 }
 
-// Show Thank You and then center wishes form
 function showThankYou(){
   thankYou.style.display='flex';
   setTimeout(()=>{
-    thankYou.style.opacity='1';
-    setTimeout(()=>{
-      thankYou.style.display='none';
-      wishesForm.style.display='flex'; // center form
-      wishesForm.style.flexDirection='column';
-      wishesForm.style.alignItems='center';
-      wishesForm.style.justifyContent='center';
-      wishesForm.style.position='fixed';
-      wishesForm.style.top='50%';
-      wishesForm.style.left='50%';
-      wishesForm.style.transform='translate(-50%, -50%)';
-    }, 3000);
-  }, 100);
-}
-
-// Wishes with delete and localStorage
-const wishList = document.getElementById('wishList');
-let savedWishes = JSON.parse(localStorage.getItem('wishes') || '[]');
-savedWishes.forEach(w => addWishToDOM(w.name,w.text));
-
-document.getElementById('submitWish').addEventListener('click', ()=>{
-  const name = document.getElementById('wishName').value.trim();
-  const text = document.getElementById('wishText').value.trim();
-  if(!name||!text) return alert('Please fill in both fields!');
-  addWishToDOM(name,text,true);
-  savedWishes.push({name,text});
-  localStorage.setItem('wishes', JSON.stringify(savedWishes));
-  document.getElementById('wishName').value='';
-  document.getElementById('wishText').value='';
-});
-
-function addWishToDOM(name,text,newWish=false){
-  const item = document.createElement('div');
-  item.className='wish-item';
-  const deleteBtn = document.createElement('button');
-  deleteBtn.innerText='Delete';
-  deleteBtn.onclick = ()=>{
-    item.remove();
-    savedWishes = savedWishes.filter(w => !(w.name===name && w.text===text));
-    localStorage.setItem('wishes', JSON.stringify(savedWishes));
-  };
-  item.innerHTML=`<strong>${name}:</strong> ${text}`;
-  item.appendChild(deleteBtn);
-  wishList.appendChild(item);
+    thankYou.style.display='none';
+    wishesForm.style.display='flex';
+  },3000);
 }
 
 // Floating emojis
@@ -296,7 +299,8 @@ setInterval(()=>{
   emoji.style.fontSize = (20 + Math.random()*20) + 'px';
   document.body.appendChild(emoji);
   setTimeout(()=>emoji.remove(),8000);
-}, 700);
+},700);
+
 </script>
 </body>
 </html>
