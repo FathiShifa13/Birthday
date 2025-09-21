@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
+<style>
+  * {margin:0; padding:0; box-sizing:border-box;}
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffd6e8, #ffe6f2);
+    overflow-x: hidden;
+    text-align: center;
+  }
+
+  /* Greeting Screen */
+  #greetingScreen, #thankYou, #wishesForm {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    color:#b01a52;
+    z-index:1000;
+    background: linear-gradient(135deg, #ffb6c1, #ffd1dc);
+    transition: opacity 1s ease;
+  }
+  #greetingScreen h1, #thankYou h2 {
+    font-size: 3rem;
+    animation: fadeIn 2s ease;
+  }
+  #greetingScreen p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+  }
+
+  /* Slideshow container */
+  .slideshow-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow: hidden;
+    background: none; /* no white background */
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 500;
+  }
+  .slide {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease;
+    width: 100%;
+    height: 100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .slide img {
+    display:block;
+    max-width: 100%;
+    max-height: 100%;
+    margin:auto;
+    filter: brightness(1.1) contrast(1.05) saturate(1.2);
+  }
+  .slide.active { opacity:1; transform:none; }
+
+  /* Wishes Form */
+  #wishesForm {
+    display: none; /* initially hidden */
+    background: rgba(255, 240, 245, 0.95);
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    z-index:1001;
+  }
+  #wishesForm input, #wishesForm textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+    border-radius: 8px;
+    border: 1px solid #ffc0cb;
+  }
+  #wishesForm button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #ff5c8d;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  .wish-list {
+    margin-top: 12px;
+    max-height: 200px;
+    overflow-y: auto;
+    text-align: left;
+  }
+  .wish-item {
+    background: #ffe6ef;
+    padding: 8px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .wish-item button {
+    background: #ff5c8d;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    padding: 2px 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+
+  /* Floating Decorations */
+  .float-emoji {
+    position: fixed;
+    bottom: -60px;
+    font-size: 24px;
+    pointer-events: none;
+    opacity: 0.8;
+    animation: floatUp 8s linear forwards;
+    z-index: 500;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0); opacity:1; }
+    100% { transform: translateY(-120vh); opacity:0; }
+  }
+  @keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Greeting Screen -->
+<div id="greetingScreen">
+  <h1>🎉 Happy Birthday Zayan ❤️ Zara 🎂</h1>
+  <p>Click anywhere to start 🎵</p>
+</div>
+
+<!-- Slideshow -->
+<div class="slideshow-container" id="slideshow">
+  <!-- 21 photos -->
+  <div class="slide"><img src="photo1.jpg" alt="1"></div>
+  <div class="slide"><img src="photo2.jpg" alt="2"></div>
+  <div class="slide"><img src="photo3.jpg" alt="3"></div>
+  <div class="slide"><img src="photo4.jpg" alt="4"></div>
+  <div class="slide"><img src="photo5.jpg" alt="5"></div>
+  <div class="slide"><img src="photo6.jpg" alt="6"></div>
+  <div class="slide"><img src="photo7.jpg" alt="7"></div>
+  <div class="slide"><img src="photo8.jpg" alt="8"></div>
+  <div class="slide"><img src="photo9.jpg" alt="9"></div>
+  <div class="slide"><img src="photo10.jpg" alt="10"></div>
+  <div class="slide"><img src="photo11.jpg" alt="11"></div>
+  <div class="slide"><img src="photo12.jpg" alt="12"></div>
+  <div class="slide"><img src="photo13.jpg" alt="13"></div>
+  <div class="slide"><img src="photo14.jpg" alt="14"></div>
+  <div class="slide"><img src="photo15.jpg" alt="15"></div>
+  <div class="slide"><img src="photo16.jpg" alt="16"></div>
+  <div class="slide"><img src="photo17.jpg" alt="17"></div>
+  <div class="slide"><img src="photo18.jpg" alt="18"></div>
+  <div class="slide"><img src="photo19.jpg" alt="19"></div>
+  <div class="slide"><img src="photo20.jpg" alt="20"></div>
+  <div class="slide"><img src="photo21.jpg" alt="21"></div>
+</div>
+
+<!-- Thank You Message -->
+<div id="thankYou" style="display:none;">
+  <h2>🙏 Thank You for Watching! 🎉</h2>
+</div>
+
+<!-- Wishes Form -->
+<div class="wishes" id="wishesForm">
+  <input id="wishName" type="text" placeholder="Your name">
+  <textarea id="wishText" placeholder="Your birthday wish"></textarea>
+  <button id="submitWish">Submit Wish</button>
+  <div class="wish-list" id="wishList"></div>
+</div>
+
+<!-- Music -->
+<audio id="bgMusic" src="music.mp3" preload="metadata"></audio>
+
+<script>
+const music = document.getElementById('bgMusic');
+const greetingScreen = document.getElementById('greetingScreen');
+const slideshow = document.getElementById('slideshow');
+const thankYou = document.getElementById('thankYou');
+const wishesForm = document.getElementById('wishesForm');
+
+// Start sequence on click
+document.body.addEventListener('click', () => {
+  greetingScreen.style.display = 'none';
+  slideshow.style.opacity = '1';
+  playMusic();
+  startSlideshow(21, 90, showThankYou);
+}, { once: true });
+
+function playMusic(){
+  music.currentTime = 100; // 1:40
+  music.play().catch(()=>console.log("Autoplay blocked"));
+}
+
+// Slideshow with callback after ending
+function startSlideshow(photoCount, totalSeconds, callback){
+  const slides = document.querySelectorAll('.slide');
+  let index = 0;
+  slides[index].classList.add('active');
+
+  const slideDuration = (totalSeconds*1000)/photoCount;
+
+  const interval = setInterval(()=>{
+    slides[index].classList.remove('active');
+    index++;
+    if(index>=slides.length){
+      clearInterval(interval);
+      slideshow.style.opacity='0';
+      if(callback) setTimeout(callback, 500);
+      return;
+    }
+    slides[index].classList.add('active');
+  }, slideDuration);
+}
+
+// Show Thank You and then center wishes form
+function showThankYou(){
+  thankYou.style.display='flex';
+  setTimeout(()=>{
+    thankYou.style.opacity='1';
+    setTimeout(()=>{
+      thankYou.style.display='none';
+      wishesForm.style.display='flex'; // center form
+      wishesForm.style.flexDirection='column';
+      wishesForm.style.alignItems='center';
+      wishesForm.style.justifyContent='center';
+      wishesForm.style.position='fixed';
+      wishesForm.style.top='50%';
+      wishesForm.style.left='50%';
+      wishesForm.style.transform='translate(-50%, -50%)';
+    }, 3000); // show thank you for 3 sec
+  }, 100);
+}
+
+// Wishes with delete and localStorage
+const wishList = document.getElementById('wishList');
+let savedWishes = JSON.parse(localStorage.getItem('wishes') || '[]');
+savedWishes.forEach(w => addWishToDOM(w.name,w.text));
+
+document.getElementById('submitWish').addEventListener('click', ()=>{
+  const name = document.getElementById('wishName').value.trim();
+  const text = document.getElementById('wishText').value.trim();
+  if(!name||!text) return alert('Please fill in both fields!');
+  addWishToDOM(name,text,true);
+  savedWishes.push({name,text});
+  localStorage.setItem('wishes', JSON.stringify(savedWishes));
+  document.getElementById('wishName').value='';
+  document.getElementById('wishText').value='';
+});
+
+function addWishToDOM(name,text,newWish=false){
+  const item = document.createElement('div');
+  item.className='wish-item';
+  const deleteBtn = document.createElement('button');
+  deleteBtn.innerText='Delete';
+  deleteBtn.onclick = ()=>{
+    item.remove();
+    savedWishes = savedWishes.filter(w => !(w.name===name && w.text===text));
+    localStorage.setItem('wishes', JSON.stringify(savedWishes));
+  };
+  item.innerHTML=`<strong>${name}:</strong> ${text}`;
+  item.appendChild(deleteBtn);
+  wishList.appendChild(item);
+}
+
+// Floating emojis
+const emojis = ['❤️','🎈','✨'];
+setInterval(()=>{
+  const emoji = document.createElement('div');
+  emoji.classList.add('float-emoji');
+  emoji.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+  emoji.style.left = Math.random() * window.innerWidth + 'px';
+  emoji.style.fontSize = (20 + Math.random()*20) + 'px';
+  document.body.appendChild(emoji);
+  setTimeout(()=>emoji.remove(),8000);
+}, 700);
+</script>
+</body>
+</html>
